@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Header from './Header/Header.js';
 import AddaTask from './AddaTask/AddaTask.js'
@@ -8,17 +8,30 @@ import Tasks from './Tasks/Tasks.js'
 import Notes from './Notes/Notes.js'
 
 function App() {
+  const [tasks, setTasks] = useState([
+    { text: "Organise Bookcase", Status: "20 %", Deadline: "2020/04/01", id: 1 },
+    { text: "Tidy room", Status: "40 %", Deadline: "2020/04/11", id: 2 },
+    { text: " Post mail", Status: "60 % ", Deadline: "2020/04/20", id: 3 },
+    { text: "Hoover carpet", Status: "80 %", Deadline: "2020/04/30", id: 4 },
+  ]);
+
+
   return (
     <div className="App">
       <Header />
       <Footer />
       <main>
         <AddaTask />
-        <CurrentTasks />
-        < Tasks text="Organise Bookcase" Status ="20 %" Deadline ="2020/04/01"/>
-        < Tasks text="Tidy room" Status="40 %" Deadline ="2020/04/11"/>
-        < Tasks text =" Post mail" Status = "60 " Deadline ="2020/04/20"/>
-        < Tasks text ="Hoover carpet" Status ="80 %" Deadline ="2020/04/30"/>
+        <CurrentTasks count={tasks.length} />
+        <div className=" container">
+          {tasks.map((task) => {
+            return < Tasks 
+            key={task.id}
+            text={task.text} 
+            Status={task.Status} 
+            Deadline={task.Deadline} />
+          })}
+        </div>
         <Notes />
       </main>
     </div>
