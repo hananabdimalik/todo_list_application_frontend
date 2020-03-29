@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Tasks (){
+function Tasks(props) {
     return (
-<p> Task</p>
+        <p> {props.text} - {props.Status} - {props.Deadline}</p>
     )
 }
 
