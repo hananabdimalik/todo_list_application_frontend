@@ -42,6 +42,24 @@ function App() {
     setTasks(newTask)
   }
 
+  const addNewTask = (text, date) => {
+const newTask = {
+  text: text, 
+  Deadline: date,
+  id: Math.random() * 1000,
+}  
+ const newTasks = [...tasks, newTask]
+setTasks(newTasks)
+  }
+
+
+const addNotes = (text) => {
+const newNote = {
+  text: text
+}
+const newNotes = [...tasks, newNote]
+setTasks(newNotes)
+}
 
   return (
     <div className="App">
@@ -51,9 +69,9 @@ function App() {
       </section>
       <main>
         <section>
-          <AddaTask />
-          <CurrentTasks count={tasks.length} />
           <div className=" container">
+            <AddaTask addNewTaskFunc={addNewTask}/>
+            <CurrentTasks count={tasks.length} />
             {tasks.map((task) => {
               return < Tasks
                 key={task.id}
@@ -68,7 +86,7 @@ function App() {
           </div>
         </section>
         <section>
-          <Notes />
+          <Notes addNotesFunc={addNotes} />
         </section>
       </main>
     </div>
