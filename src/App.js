@@ -14,56 +14,62 @@ function App() {
     { text: " Post mail", Status: "60 % ", Deadline: "2020/04/20", id: 3 },
     { text: "Hoover carpet", Status: "100%", Deadline: "2020/04/30", id: 4 },
   ]);
-// Click on the delete button
-//   the application needs to know this is happening (listen to the event)
-//   Know which button was clicked 
-//   Remove the relevent todo object from our state 
+  // Click on the delete button
+  //   the application needs to know this is happening (listen to the event)
+  //   Know which button was clicked 
+  //   Remove the relevent todo object from our state 
 
 
-//Click on the complete button
+  //Click on the complete button
   //our application need to know this is happening 
   // which button was clicked 
   //update the relevent task in the state
 
   const deleteTask = (id) => {
     const filteredTasks = tasks.filter((task) => {
-     return task.id !== id;
+      return task.id !== id;
     })
 
-    setTasks(filteredTasks); 
-  } 
+    setTasks(filteredTasks);
+  }
 
-const completeTask =(id) => {
-  const newTask = tasks.map((task) => {
-    if(task.id === id && task.Status === 100 ){
- }     
-    return task; 
-  });
-setTasks (newTask)
-}
+  const completeTask = (id) => {
+    const newTask = tasks.map((task) => {
+      if (task.id === id && task.Status === 100) {
+      }
+      return task;
+    });
+    setTasks(newTask)
+  }
 
 
   return (
     <div className="App">
-      <Header />
-      <Footer />
+      <section>
+        <Header />
+        <Footer />
+      </section>
       <main>
-        <AddaTask />
-        <CurrentTasks count={tasks.length} />
-        <div className=" container">
-          {tasks.map((task) => {
-            return < Tasks
-              key={task.id}
-              deleteTaskFunc={deleteTask}
-              completeTaskFun={completeTask}
-              text={task.text}
-              Status={task.Status}
-              Deadline={task.Deadline}
-              id={task.id}
-            />
-          })}
-        </div>
-        <Notes />
+        <section>
+          <AddaTask />
+          <CurrentTasks count={tasks.length} />
+          <div className=" container">
+            {tasks.map((task) => {
+              return < Tasks
+                key={task.id}
+                deleteTaskFunc={deleteTask}
+                completeTaskFun={completeTask}
+                text={task.text}
+                Status={task.Status}
+                Deadline={task.Deadline}
+                id={task.id}
+              />
+            })}
+          </div>
+        </section>
+        <section>
+          <Notes />
+        </section>
       </main>
     </div>
   );
