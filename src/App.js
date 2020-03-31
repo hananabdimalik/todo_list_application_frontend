@@ -10,26 +10,13 @@ import Notes from './Notes/Notes.js';
 
 function App() {
   const [tasks, setTasks] = useState([
-    { text: "Organise Bookcase", Status: "20 %", Deadline: "2020/04/01", id: 1 },
-    { text: "Tidy room", Status: "40 %", Deadline: "2020/04/11", id: 2 },
-    { text: " Post mail", Status: "60 % ", Deadline: "2020/04/20", id: 3 },
-    { text: "Hoover carpet", Status: "100%", Deadline: "2020/04/30", id: 4 },
+    { text: "Organise Bookcase", Status: "20 ", Deadline: "2020/04/01", id: 1 },
+    { text: "Tidy room", Status: "40", Deadline: "2020/04/11", id: 2 },
+    { text: " Post mail", Status: "60  ", Deadline: "2020/04/20", id: 3 },
+    { text: "Hoover carpet", Status: "100", Deadline: "2020/04/30", id: 4 },
   ]);
 
 
-  const [notes, setNotes] = useState([
-    {text: " "}
-  ]);
-  // Click on the delete button
-  //   the application needs to know this is happening (listen to the event)
-  //   Know which button was clicked 
-  //   Remove the relevent todo object from our state 
-
-
-  //Click on the complete button
-  //our application need to know this is happening 
-  // which button was clicked 
-  //update the relevent task in the state
 
   const deleteTask = (id) => {
     const filteredTasks = tasks.filter((task) => {
@@ -41,7 +28,8 @@ function App() {
 
   const completeTask = (id) => {
     const newTask = tasks.map((task) => {
-      if (task.id === id && task.Status === 100) {
+      if (task.id === id ) {
+        task.status = 100;
       }
       return task;
     });
@@ -57,15 +45,6 @@ const newTask = {
  const newTasks = [...tasks, newTask]
 setTasks(newTasks)
   }
-
-
-const addNotes = (text) => {
-const newNote = {
-  text: text
-}
-const newNotes = [...notes, newNote]
-setTasks(newNotes)
-}
 
 
   return (
@@ -95,11 +74,11 @@ setTasks(newNotes)
           </div>
         </section>
         <section className="container">
-          <Notes addNotesFunc={addNotes} />
+          <Notes  />
         </section>
       </main>
     </div>
   );
 }
-
+// addNotesFunc={addNotes}
 export default App;
