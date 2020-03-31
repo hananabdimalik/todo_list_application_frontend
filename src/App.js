@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
 import Header from './Header/Header.js';
-import AddaTask from './AddaTask/AddaTask.js'
-import Footer from './Footer/Footer.js'
+import AddaTask from './AddaTask/AddaTask.js';
+import Footer from './Footer/Footer.js';
 import CurrentTasks from './CurrentTasks/CurrentTasks.js';
-import Tasks from './Tasks/Tasks.js'
-import Notes from './Notes/Notes.js'
+import Tasks from './Tasks/Tasks.js';
+import Notes from './Notes/Notes.js';
+
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -13,6 +14,11 @@ function App() {
     { text: "Tidy room", Status: "40 %", Deadline: "2020/04/11", id: 2 },
     { text: " Post mail", Status: "60 % ", Deadline: "2020/04/20", id: 3 },
     { text: "Hoover carpet", Status: "100%", Deadline: "2020/04/30", id: 4 },
+  ]);
+
+
+  const [notes, setNotes] = useState([
+    {text: " "}
   ]);
   // Click on the delete button
   //   the application needs to know this is happening (listen to the event)
@@ -57,9 +63,10 @@ const addNotes = (text) => {
 const newNote = {
   text: text
 }
-const newNotes = [...tasks, newNote]
+const newNotes = [...notes, newNote]
 setTasks(newNotes)
 }
+
 
   return (
     <div className="App">
@@ -68,9 +75,10 @@ setTasks(newNotes)
         <Footer />
       </section>
       <main>
-        <section>
-          <div className=" container">
+        <section className="container">
+          <div className="container">
             <AddaTask addNewTaskFunc={addNewTask}/>
+            <div className="container">
             <CurrentTasks count={tasks.length} />
             {tasks.map((task) => {
               return < Tasks
@@ -84,8 +92,9 @@ setTasks(newNotes)
               />
             })}
           </div>
+          </div>
         </section>
-        <section>
+        <section className="container">
           <Notes addNotesFunc={addNotes} />
         </section>
       </main>

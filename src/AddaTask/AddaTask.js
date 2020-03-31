@@ -19,8 +19,6 @@ function AddaTask(props) {
        props.addNewTaskFunc(taskText, date);
     }
 
-
-
     return (
         <div className="container">
             <div className="card">
