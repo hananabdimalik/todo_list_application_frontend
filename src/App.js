@@ -8,15 +8,18 @@ import Tasks from './Tasks/Tasks.js';
 import Notes from './Notes/Notes.js';
 
 
+
+
+
 function App() {
   const [tasks, setTasks] = useState([
-    { text: "Organise Bookcase", Status: "20 ", Deadline: "2020/04/01", id: 1 },
-    { text: "Tidy room", Status: "40", Deadline: "2020/04/11", id: 2 },
-    { text: " Post mail", Status: "60  ", Deadline: "2020/04/20", id: 3 },
-    { text: "Hoover carpet", Status: "100", Deadline: "2020/04/30", id: 4 },
+    { text: "Organise Bookcase", Status: 20, Deadline: "2020/04/01", id: 1 , selected: false},
+    { text: "Tidy room", Status: 40, Deadline: "2020/04/11", id: 2, selected : false },
+    { text: " Post mail", Status: 60, Deadline: "2020/04/20", id: 3, selected : false },
+    { text: "Hoover carpet", Status: 100 ,  Deadline: "2020/04/30", id: 4, selected : false  },
   ]);
 
-
+console.dir(setTasks);
 
   const deleteTask = (id) => {
     const filteredTasks = tasks.filter((task) => {
@@ -28,23 +31,74 @@ function App() {
 
   const completeTask = (id) => {
     const newTask = tasks.map((task) => {
-      if (task.id === id ) {
-        task.status = 100;
+      if (task.id === id) {
+        task.Status = 100;
+        console.log(task)
       }
       return task;
     });
+    console.log(newTask);
     setTasks(newTask)
   }
 
+
+
   const addNewTask = (text, date) => {
-const newTask = {
-  text: text, 
-  Deadline: date,
-  id: Math.random() * 1000,
-}  
- const newTasks = [...tasks, newTask]
-setTasks(newTasks)
+    const newTask = {
+      text: text,
+      Deadline: date,
+      id: Math.random() * 1000,
+    }
+    const newTasks = [...tasks, newTask]
+    setTasks(newTasks)
   }
+
+
+
+
+  //----------------------------------------------//
+  const [notes, setNotes] = useState([
+    { text: "Add notes here " },
+  ])
+
+
+  const addNewNotes = (text) => {
+    const newNote = {
+      text: text,
+    }
+    const newNotes = [...notes, newNote]
+    setNotes(newNotes)
+  }
+
+
+  // add a boolean - 'selected' property to your task object
+  // when checkbox is checked it turns true
+  
+  // when status dropdown is changed 
+  //that would loop through array, check 'checked' status
+  // update status key of each that are true
+
+  const updateStatus = (id) => {
+
+
+    // const newStatus = {
+    //   text: 
+    // }
+    // setTasks(newStatus)
+  }
+
+const selectedCheckBox = (id) => {
+// eg id = 3
+// tasks = array
+//loop through array looking for specific id 
+// if statement to check id
+//if false, move on, else change selected to true
+
+
+
+
+}
+
 
 
   return (
@@ -56,25 +110,31 @@ setTasks(newTasks)
       <main>
         <section className="container">
           <div className="container">
-            <AddaTask addNewTaskFunc={addNewTask}/>
+            <AddaTask addNewTaskFunc={addNewTask} />
             <div className="container">
-            <CurrentTasks count={tasks.length} />
-            {tasks.map((task) => {
-              return < Tasks
-                key={task.id}
-                deleteTaskFunc={deleteTask}
-                completeTaskFun={completeTask}
-                text={task.text}
-                Status={task.Status}
-                Deadline={task.Deadline}
-                id={task.id}
-              />
-            })}
-          </div>
+              <CurrentTasks count={tasks.length} />
+              {tasks.map((task) => {
+                return < Tasks
+                  key={task.id}
+                  deleteTaskFunc={deleteTask}
+                  completeTaskFun={completeTask}
+                  text={task.text}
+                  Status={task.Status}
+                  Deadline={task.Deadline}
+                  id={task.id}
+                />
+              })}
+            </div>
           </div>
         </section>
         <section className="container">
-          <Notes  />
+          {/* {notes.map((note) =>{
+return < Notes 
+text = {notes.text}/>
+          })} */}
+          <Notes
+            addNewNotesFun={addNewNotes}
+            text={notes.text} />
         </section>
       </main>
     </div>

@@ -8,8 +8,10 @@ import "./Notes.css";
 function Notes(props) {
  
     const [noteText, setNoteText] = useState(" ")
+    
     const handleTextChange = (event) => {
         setNoteText(event.target.value)
+       
     }
 
     return (
