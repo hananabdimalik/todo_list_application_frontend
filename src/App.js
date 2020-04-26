@@ -13,13 +13,13 @@ import Notes from './Notes/Notes.js';
 
 function App() {
   const [tasks, setTasks] = useState([
-    { text: "Organise Bookcase", Status: 20, Deadline: "2020/04/01", id: 1 , selected: false},
-    { text: "Tidy room", Status: 40, Deadline: "2020/04/11", id: 2, selected : false },
-    { text: " Post mail", Status: 60, Deadline: "2020/04/20", id: 3, selected : false },
-    { text: "Hoover carpet", Status: 100 ,  Deadline: "2020/04/30", id: 4, selected : false  },
+    { text: "Organise Bookcase", Status: 20, Deadline: "2020/04/01", id: 1, selected: false },
+    { text: "Tidy room", Status: 40, Deadline: "2020/04/11", id: 2, selected: false },
+    { text: "Post mail", Status: 60, Deadline: "2020/04/20", id: 3, selected: false },
+    { text: "Hoover carpet", Status: 100, Deadline: "2020/04/30", id: 4, selected: false },
   ]);
 
-console.dir(setTasks);
+  // console.dir(setTasks);
 
   const deleteTask = (id) => {
     const filteredTasks = tasks.filter((task) => {
@@ -41,8 +41,6 @@ console.dir(setTasks);
     setTasks(newTask)
   }
 
-
-
   const addNewTask = (text, date) => {
     const newTask = {
       text: text,
@@ -53,8 +51,21 @@ console.dir(setTasks);
     setTasks(newTasks)
   }
 
+  const toggleTask =(id) =>{
+    const newTask = tasks.map((task) => {
+      if (task.id === id) {
+        task.selected = !task.selected;
+        console.log(task)
+      }
+      return task;
+    });
+    console.log(newTask);
+    setTasks(newTask)
+  }
 
+  const updateTaskStatus = (id, status) =>{
 
+  }
 
   //----------------------------------------------//
   const [notes, setNotes] = useState([
@@ -70,10 +81,21 @@ console.dir(setTasks);
     setNotes(newNotes)
   }
 
+const setStatusOfSelectedTask = (Status) => {
+
+}
+
+//set status of selected tasks to a given status 
+
+
+//.....................
+
+
+
 
   // add a boolean - 'selected' property to your task object
   // when checkbox is checked it turns true
-  
+
   // when status dropdown is changed 
   //that would loop through array, check 'checked' status
   // update status key of each that are true
@@ -87,56 +109,55 @@ console.dir(setTasks);
     // setTasks(newStatus)
   }
 
-const selectedCheckBox = (id) => {
-// eg id = 3
-// tasks = array
-//loop through array looking for specific id 
-// if statement to check id
-//if false, move on, else change selected to true
-
-
-
-
-}
+  const selectedCheckBox = (id) => {
+    // eg id = 3
+    // tasks = array
+    //loop through array looking for specific id 
+    // if statement to check id
+    //if false, move on, else change selected to true
+  }
 
 
 
   return (
+    <div className="container A">
     <div className="App">
-      <section>
-        <Header />
-        <Footer />
-      </section>
-      <main>
-        <section className="container">
-          <div className="container">
-            <AddaTask addNewTaskFunc={addNewTask} />
-            <div className="container">
-              <CurrentTasks count={tasks.length} />
-              {tasks.map((task) => {
-                return < Tasks
-                  key={task.id}
-                  deleteTaskFunc={deleteTask}
-                  completeTaskFun={completeTask}
-                  text={task.text}
-                  Status={task.Status}
-                  Deadline={task.Deadline}
-                  id={task.id}
-                />
-              })}
-            </div>
-          </div>
+        <section>
+          <Header />
+          <Footer />
         </section>
-        <section className="container">
-          {/* {notes.map((note) =>{
+        <main>
+          <section className="container">
+            <div className="container">
+              <AddaTask addNewTaskFunc={addNewTask} />
+              <div className="container">
+                <CurrentTasks count={tasks.length} tasks={tasks} />
+                {tasks.map((task) => {
+                  return < Tasks
+                    key={task.id}
+                    deleteTaskFunc={deleteTask}
+                    completeTaskFun={completeTask}
+                    text={task.text}
+                    Status={task.Status}
+                    toggleSelected={toggleTask}
+                    Deadline={task.Deadline}
+                    id={task.id}
+                  />
+                })}
+              </div>
+            </div>
+          </section>
+          <section className="container">
+            {/* {notes.map((note) =>{
 return < Notes 
 text = {notes.text}/>
           })} */}
-          <Notes
-            addNewNotesFun={addNewNotes}
-            text={notes.text} />
-        </section>
-      </main>
+            <Notes
+              addNewNotesFun={addNewNotes}
+              text={notes.text} />
+          </section>
+        </main>
+      </div>
     </div>
   );
 }

@@ -1,8 +1,8 @@
 {
-  "name": "todo_list_application_frontend",
+  "name": "todo_list_application_react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://hananabdimalik.github.io/todo_list_application_frontend",
+  "homepage": "https://hananabdimalik.github.io/todo_list_application_react",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",

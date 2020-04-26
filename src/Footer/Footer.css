@@ -1,4 +1,8 @@
 .footer{
    line-height: 1em;
-    font-size: small;
+    font-size: 5px;
+} 
+
+.container {
+    font-size: 50px;
 }
