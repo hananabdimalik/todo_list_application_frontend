@@ -25,15 +25,6 @@ function Tasks(props) {
         props.toggleSelected(props.id);
     }
 
-    // const faveFood = 'pizza'
-    // const dougsExample = `my fave food is ${faveFood}` // 'my fave food is pizza
-    // if props.Status === 100 -> className 'taskComplate' (which has a green background)
-    // if not, be normal
-
-    // props.Status === 100
-    // if true 'cardBodyTaskComplete'
-    // if false 'card-body'
-//   props.Status === 100 ? 'cardBodyTaskComplete' : 'card-body'
 
     return (
         <div className="card">

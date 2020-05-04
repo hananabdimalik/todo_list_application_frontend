@@ -1,127 +1,153 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './App.css';
 import Header from './Header/Header.js';
 import AddaTask from './AddaTask/AddaTask.js';
 import Footer from './Footer/Footer.js';
 import CurrentTasks from './CurrentTasks/CurrentTasks.js';
 import Tasks from './Tasks/Tasks.js';
-import Notes from './Notes/Notes.js';
-
-
 
 
 
 function App() {
-  const [tasks, setTasks] = useState([
-    { text: "Organise Bookcase", Status: 20, Deadline: "2020/04/01", id: 1, selected: false },
-    { text: "Tidy room", Status: 40, Deadline: "2020/04/11", id: 2, selected: false },
-    { text: "Post mail", Status: 60, Deadline: "2020/04/20", id: 3, selected: false },
-    { text: "Hoover carpet", Status: 100, Deadline: "2020/04/30", id: 4, selected: false },
-  ]);
+  const [tasks, setTasks] = useState([]);
 
-  // console.dir(setTasks);
+  //only run this code once when the componenets first mounts
+  useEffect(() => {
+    //Fetch tasks from the Backend (GET)
+    axios.get("https://giovvfsmk9.execute-api.eu-west-1.amazonaws.com/dev/tasks")
+      .then(response => {
+        console.log("Success", response.data);
+        setTasks(response.data);
+      })
+      .catch(err => {
+        console.log("Error", err)
+      });
+    //this array would normally contain the values that may change, and React would run the above code when the value changes
+    //this is called 'Array of dependencies  
+  }, []);
 
+  //Issue a Delete a task from the task from the tasks arrat (based on ID), and update the state with the new, short array
+  // any function that updates state should live where the state live
   const deleteTask = (id) => {
-    const filteredTasks = tasks.filter((task) => {
-      return task.id !== id;
-    })
+    //Issue a DELETE request to my API via postman
+    //if resolves, THEN I will filter my tasks on the frontend to remove the task with the given ID
+    //if rejects, I'm not ganna filer
 
-    setTasks(filteredTasks);
-  }
+    axios.delete(`https://giovvfsmk9.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`)
+      .then(response => {
+        const filteredTasks = tasks.filter((task) => {
+          return task.TaskId !== id;
+        });
+        setTasks(filteredTasks);
+      })
+      .catch(err => {
+        console.log("API Error", err)
+      });
+  };
 
   const completeTask = (id) => {
-    const newTask = tasks.map((task) => {
-      if (task.id === id) {
-        task.Status = 100;
-        console.log(task)
-      }
-      return task;
+
+    const selectedTask = tasks.find(task => {
+      return task.TaskId === id;
     });
-    console.log(newTask);
-    setTasks(newTask)
+
+    axios.put(`https://giovvfsmk9.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`, {
+      Completed: true,
+      Status: selectedTask.Status
+    }
+    )
+      .then((response) => {
+        console.log("Updated status", response)
+        //Create a new array of uptaded tasks, where the completed property of the matching task has been updated
+        const newTask = tasks.map((task) => {
+          if (task.TaskId === id) {
+            task.Status = 100;
+            task.Completed = true
+          }
+          return task;
+        });
+
+        setTasks(newTask)
+      })
+      .catch((err) => {
+        console.log("Error updating Task", err)
+      });
   }
+
 
   const addNewTask = (text, date) => {
-    const newTask = {
-      text: text,
+    axios.post("https://giovvfsmk9.execute-api.eu-west-1.amazonaws.com/dev/tasks", {
+      Description: text,
       Deadline: date,
-      id: Math.random() * 1000,
-    }
-    const newTasks = [...tasks, newTask]
-    setTasks(newTasks)
+      Status: 0
+    })
+      .then(response => {
+        const newTask = response.data;
+        //create a new array of tasks, which includes this new task
+        //Avoid mutating arrays or object(push, pop, splice, sort) 
+        const newTasks = [...tasks, newTask]
+        console.log(newTasks)
+        setTasks(newTasks)
+      })
+      .catch(err => {
+        console.log("Error creating task", err)
+      });
   }
 
-  const toggleTask =(id) =>{
+  const toggleTask = (id) => {
     const newTask = tasks.map((task) => {
-      if (task.id === id) {
+      if (task.TaskId === id) {
         task.selected = !task.selected;
         console.log(task)
       }
       return task;
     });
-    console.log(newTask);
     setTasks(newTask)
   }
 
-  const updateTaskStatus = (id, status) =>{
 
+
+  const selectStatus = (event) => {
+    const updatedTask = tasks.map((task) => {
+      console.log(task)
+      if (task.selected) {
+        task.Status = event.target.value
+      }
+      return task;
+    })
+    setTasks(updatedTask)
   }
 
-  //----------------------------------------------//
-  const [notes, setNotes] = useState([
-    { text: "Add notes here " },
-  ])
 
 
-  const addNewNotes = (text) => {
-    const newNote = {
-      text: text,
-    }
-    const newNotes = [...notes, newNote]
-    setNotes(newNotes)
-  }
+  const updateTaskStatus = (id) => {
 
-const setStatusOfSelectedTask = (Status) => {
+    axios.put(`https://giovvfsmk9.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`, {
+      Status :100
+    })
+      .then((response) => {
+        console.log("updated", response)
+        //Create a new array of uptaded tasks, where the completed property of the matching task has been updated
+        const newTask = tasks.map((task) => {
+          if (task.TaskId === id) {
+            task.selected = !task.selected
+          }
+          return task;
+        });
 
-}
-
-//set status of selected tasks to a given status 
-
-
-//.....................
-
-
-
-
-  // add a boolean - 'selected' property to your task object
-  // when checkbox is checked it turns true
-
-  // when status dropdown is changed 
-  //that would loop through array, check 'checked' status
-  // update status key of each that are true
-
-  const updateStatus = (id) => {
-
-
-    // const newStatus = {
-    //   text: 
-    // }
-    // setTasks(newStatus)
-  }
-
-  const selectedCheckBox = (id) => {
-    // eg id = 3
-    // tasks = array
-    //loop through array looking for specific id 
-    // if statement to check id
-    //if false, move on, else change selected to true
+        setTasks(newTask)
+      })
+      .catch((err) => {
+        console.log("Error updating Task", err)
+      })
   }
 
 
 
   return (
     <div className="container A">
-    <div className="App">
+      <div className="App">
         <section>
           <Header />
           <Footer />
@@ -131,30 +157,23 @@ const setStatusOfSelectedTask = (Status) => {
             <div className="container">
               <AddaTask addNewTaskFunc={addNewTask} />
               <div className="container">
-                <CurrentTasks count={tasks.length} tasks={tasks} />
+                <CurrentTasks count={tasks.length} tasks={tasks}
+                  statusUpdate={selectStatus}
+                />
                 {tasks.map((task) => {
                   return < Tasks
-                    key={task.id}
+                    key={task.TaskId}
                     deleteTaskFunc={deleteTask}
                     completeTaskFun={completeTask}
-                    text={task.text}
+                    text={task.Description}
                     Status={task.Status}
                     toggleSelected={toggleTask}
                     Deadline={task.Deadline}
-                    id={task.id}
+                    id={task.TaskId}
                   />
                 })}
               </div>
             </div>
-          </section>
-          <section className="container">
-            {/* {notes.map((note) =>{
-return < Notes 
-text = {notes.text}/>
-          })} */}
-            <Notes
-              addNewNotesFun={addNewNotes}
-              text={notes.text} />
           </section>
         </main>
       </div>

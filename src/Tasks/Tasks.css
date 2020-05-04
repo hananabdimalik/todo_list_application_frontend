@@ -1,9 +1,14 @@
 .rows{
     font-size: 10px;
 }
+@media only screen and (max-width: 500px){
+    body{
+      font-size: 10px;
+    }
+  }
 
-/* .cardBodyTaskComplete{
+.cardBodyTaskComplete{
 background-color:rgb(158, 238, 158)  ;
-} */
+}
 
 /* card-body */
