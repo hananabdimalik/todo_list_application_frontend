@@ -47,14 +47,9 @@ function App() {
   };
 
   const completeTask = (id) => {
-
-    const selectedTask = tasks.find(task => {
-      return task.TaskId === id;
-    });
-
     axios.put(`https://giovvfsmk9.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`, {
       Completed: true,
-      Status: selectedTask.Status
+      Status: 100
     }
     )
       .then((response) => {
@@ -90,6 +85,16 @@ function App() {
         console.log(newTasks)
         setTasks(newTasks)
       })
+      // .then(response => {
+      //   const newTask = tasks.map((task) => {
+      //     if (task.TaskId === TaskId) {
+      //       task.selected = !task.selected;
+      //       console.log(task)
+      //     }
+      //     return task;
+      //   });
+      //   setTasks(newTask)
+      // })
       .catch(err => {
         console.log("Error creating task", err)
       });
@@ -120,11 +125,10 @@ function App() {
   }
 
 
-
   const updateTaskStatus = (id) => {
 
     axios.put(`https://giovvfsmk9.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`, {
-      Status :100
+      Status: 100
     })
       .then((response) => {
         console.log("updated", response)
@@ -149,8 +153,8 @@ function App() {
     <div className="container A">
       <div className="App">
         <section>
-          <Header />
-          <Footer />
+          <Header/>
+          <Footer/>
         </section>
         <main>
           <section className="container">
@@ -164,10 +168,11 @@ function App() {
                   return < Tasks
                     key={task.TaskId}
                     deleteTaskFunc={deleteTask}
-                    completeTaskFun={completeTask}
+                    completeTaskFunc={completeTask}
                     text={task.Description}
                     Status={task.Status}
                     toggleSelected={toggleTask}
+                    updateTaskStatusFunc={updateTaskStatus}
                     Deadline={task.Deadline}
                     id={task.TaskId}
                   />
@@ -180,5 +185,4 @@ function App() {
     </div>
   );
 }
-// addNotesFunc={addNotes}
 export default App;

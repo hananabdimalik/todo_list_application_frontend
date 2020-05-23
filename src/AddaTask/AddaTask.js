@@ -15,7 +15,6 @@ function AddaTask(props) {
     }
 
     const handleAddTask = () => {
-        console.log("clicked")
         props.addNewTaskFunc(taskText, date);
     }
 

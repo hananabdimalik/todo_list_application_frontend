@@ -13,13 +13,13 @@ function Tasks(props) {
     const handleCompelteClick = () => {
         console.log("Complete button was clicked");
         console.log(props.id);
-        props.completeTaskFun(props.id);
+        props.completeTaskFunc(props.id);
     }
 
     const handleStatusChange = (event) => {
         console.log(event.target.value)
+        props.updateTaskStatusFunc(props.id)
     }
-
     const changeStatus = (event) => {   
         console.log(event.target.value)   
         props.toggleSelected(props.id);
