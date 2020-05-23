@@ -12,9 +12,9 @@ import Tasks from './Tasks/Tasks.js';
 function App() {
   const [tasks, setTasks] = useState([]);
 
-  //only run this code once when the componenets first mounts
+
   useEffect(() => {
-    //Fetch tasks from the Backend (GET)
+  
     axios.get("https://giovvfsmk9.execute-api.eu-west-1.amazonaws.com/dev/tasks")
       .then(response => {
         console.log("Success", response.data);
@@ -23,16 +23,11 @@ function App() {
       .catch(err => {
         console.log("Error", err)
       });
-    //this array would normally contain the values that may change, and React would run the above code when the value changes
-    //this is called 'Array of dependencies  
+  
   }, []);
 
-  //Issue a Delete a task from the task from the tasks arrat (based on ID), and update the state with the new, short array
-  // any function that updates state should live where the state live
+
   const deleteTask = (id) => {
-    //Issue a DELETE request to my API via postman
-    //if resolves, THEN I will filter my tasks on the frontend to remove the task with the given ID
-    //if rejects, I'm not ganna filer
 
     axios.delete(`https://giovvfsmk9.execute-api.eu-west-1.amazonaws.com/dev/tasks/${id}`)
       .then(response => {
@@ -54,7 +49,7 @@ function App() {
     )
       .then((response) => {
         console.log("Updated status", response)
-        //Create a new array of uptaded tasks, where the completed property of the matching task has been updated
+     
         const newTask = tasks.map((task) => {
           if (task.TaskId === id) {
             task.Status = 100;
@@ -79,22 +74,10 @@ function App() {
     })
       .then(response => {
         const newTask = response.data;
-        //create a new array of tasks, which includes this new task
-        //Avoid mutating arrays or object(push, pop, splice, sort) 
         const newTasks = [...tasks, newTask]
         console.log(newTasks)
         setTasks(newTasks)
       })
-      // .then(response => {
-      //   const newTask = tasks.map((task) => {
-      //     if (task.TaskId === TaskId) {
-      //       task.selected = !task.selected;
-      //       console.log(task)
-      //     }
-      //     return task;
-      //   });
-      //   setTasks(newTask)
-      // })
       .catch(err => {
         console.log("Error creating task", err)
       });
@@ -132,7 +115,6 @@ function App() {
     })
       .then((response) => {
         console.log("updated", response)
-        //Create a new array of uptaded tasks, where the completed property of the matching task has been updated
         const newTask = tasks.map((task) => {
           if (task.TaskId === id) {
             task.selected = !task.selected

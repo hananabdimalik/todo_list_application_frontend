@@ -1,11 +1,11 @@
 import React from 'react';
 import "./CurrentTasks.css"
-// import CurrentTasks from '../CurrentTasks/CurrentTasks';
+
 
 
 function CurrentTasks(props) {
 
-    //list of selected tasks 
+
     const selectedTask = props.tasks.filter((task) => {
         return task.selected;
         

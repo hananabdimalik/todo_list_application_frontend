@@ -5,8 +5,6 @@ import moment from 'moment';
 function Tasks(props) {
 
     const handleDeleteClick = () => {
-        // console.log("Delete button was clicked");
-        // console.log(props.id);
         props.deleteTaskFunc(props.id);
     };
 
@@ -29,7 +27,6 @@ function Tasks(props) {
     return (
         <div className="card">
             <div className= "card-body">
-             {/* {`${props.Status === 100 ? 'cardBodyTaskComplete' : 'card-body'}`} */}
                 <div className="row">
                     <div className="col-12 col-md-4"> <input type="checkbox" value={props.id} className="form-check-input" onClick={changeStatus}/>{props.text}</div>
                     <div className="col-3 col-md-2" onChange={handleStatusChange}>{props.Status}</div>
