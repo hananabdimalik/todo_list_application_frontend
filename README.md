@@ -9,9 +9,13 @@ The hosted version to the application is available here: https://hananabdimalik.
 This project uses the following technology:
 
 ReactJS
+
 JavaScript 
+
 BootStrap
+
 Axios
+
 ESLint
 
 It has been designed and built with mobile-first reponsive principles in mind.
